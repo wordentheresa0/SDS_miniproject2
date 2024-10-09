@@ -7,3 +7,7 @@ editor: visual
 ```{r}
 library(tidyverse)
 ```
+
+```{r}
+# add something to this line to create a merge conflict: 
+```
