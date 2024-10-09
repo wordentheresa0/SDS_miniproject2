@@ -12,6 +12,6 @@ library(tidyverse)
 #Elise wrote this line of code.
 =======
 ```{r}
-# add something to this line to create a merge conflict: 
+# add something to this line to create a merge conflict: theresa here!
 ```
 >>>>>>> 77f6510e99d594351d4771cab0bfe1fac29f1fdb
