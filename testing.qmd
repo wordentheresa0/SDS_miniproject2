@@ -92,3 +92,17 @@ get_gutenberg()
 
 ```
 
+
+Function for getting text from title:
+```{r}
+get_text <- function(t) {
+  initial_tbl <- gutenberg_works(title == t)
+  id <- initial_tbl |>
+    pull(gutenberg_id)
+  text_tbl <- gutenberg_download(id)
+}
+```
+
+```{r}
+get_text("Frankenstein; Or, The Modern Prometheus")
+```
