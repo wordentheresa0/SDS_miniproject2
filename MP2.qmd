@@ -9,6 +9,10 @@ library(tidyverse)
 ```
 
 ```{r}
+<<<<<<< HEAD
 #Elise wrote this line of code.
+=======
+# add something to this line to create a merge conflict: theresa here!
+>>>>>>> 9ffffc566022681b092ace7006b4a9d9761b1e42
 ```
 
