@@ -21,6 +21,7 @@ library(maps)
 library(viridis)
 library(leaflet)
 library(htmltools)
+library(gutenbergr)
 ```
 
 
@@ -51,5 +52,26 @@ books_last30_tbl <- tibble(
 
 ```{r}
 books_last30_tbl
+```
+
+
+Example: One method to get id and text for Frankenstein
+
+```{r}
+frankenstein <- gutenberg_works(title == "Frankenstein; Or, The Modern Prometheus")
+```
+
+```{r}
+frankenstein_id <- frankenstein |>
+  pull(gutenberg_id)
+frankenstein_id
+```
+
+```{r}
+frankenstein_text_tbl <- gutenberg_download(frankenstein_id)
+```
+
+```{r}
+frankenstein_text_tbl
 ```
 
