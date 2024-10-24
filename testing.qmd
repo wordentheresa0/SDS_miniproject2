@@ -1,0 +1,55 @@
+---
+title: "MP2"
+format: html
+editor: visual
+---
+
+```{r}
+# to install gutenbergr package
+install.packages("gutenbergr")
+```
+
+```{r}
+#| include: FALSE
+
+library(tidyverse)
+library(stringr)
+library(rvest)
+library(polite)
+library(sf)
+library(maps)
+library(viridis)
+library(leaflet)
+library(htmltools)
+```
+
+
+```{r}
+# check that scraping is allowed (Step 0)
+robotstxt::paths_allowed("https://www.gutenberg.org/browse/scores/top#books-last30")
+
+# Step 1: Download the HTML and turn it into an XML file with read_html()
+gutenberg_page <- read_html("https://www.gutenberg.org/browse/scores/top#books-last30")
+```
+
+```{r}
+# Step 2: Extract specific nodes with html_nodes()
+books_last30 <- html_nodes(gutenberg, "#books-last30+ ol li")
+books_last30
+```
+```{r}
+books_last30_text <- html_text(books_last30)
+books_last30_text
+```
+
+```{r}
+books_last30_tbl <- tibble(
+  title = gsub(" by.*", "", books_last30_text),
+  author = gsub(".* by ", "", books_last30_text)
+)
+```
+
+```{r}
+books_last30_tbl
+```
+
