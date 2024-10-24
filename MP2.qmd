@@ -9,7 +9,19 @@ library(tidyverse)
 ```
 
 ```{r}
-#Elise wrote this line of code.
-# add something to this line to create a merge conflict: theresa here!
+get_gutenberg <- function() {
+  if (robotstxt::paths_allowed("https://www.gutenberg.org/browse/scores/top#books-last30") == "TRUE") {
+    books_last30 <- html_nodes(gutenberg_page, "#books-last30+ ol li")
+    books_last30_text <- html_text(books_last30)
+    books_last30_tbl <- tibble(
+  title = gsub(" by.*", "", books_last30_text),
+  author = gsub(".* by ", "", books_last30_text)
+)
+    print(books_last30_tbl)
+  }
+}
+
+get_gutenberg()
+
 ```
 
