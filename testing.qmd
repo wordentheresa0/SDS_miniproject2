@@ -24,7 +24,6 @@ library(htmltools)
 library(gutenbergr)
 ```
 
-
 ```{r}
 # check that scraping is allowed (Step 0)
 robotstxt::paths_allowed("https://www.gutenberg.org/browse/scores/top#books-last30")
@@ -35,9 +34,10 @@ gutenberg_page <- read_html("https://www.gutenberg.org/browse/scores/top#books-l
 
 ```{r}
 # Step 2: Extract specific nodes with html_nodes()
-books_last30 <- html_nodes(gutenberg, "#books-last30+ ol li")
+books_last30 <- html_nodes(gutenberg_page, "#books-last30+ ol li")
 books_last30
 ```
+
 ```{r}
 books_last30_text <- html_text(books_last30)
 books_last30_text
@@ -53,7 +53,6 @@ books_last30_tbl <- tibble(
 ```{r}
 books_last30_tbl
 ```
-
 
 Example: One method to get id and text for Frankenstein
 
@@ -74,4 +73,3 @@ frankenstein_text_tbl <- gutenberg_download(frankenstein_id)
 ```{r}
 frankenstein_text_tbl
 ```
-
