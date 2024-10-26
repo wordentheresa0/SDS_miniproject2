@@ -6,22 +6,32 @@ editor: visual
 
 ```{r}
 library(tidyverse)
+library(polite)
+library(gutenbergr)
+library(htmltools)
 ```
 
 ```{r}
-get_gutenberg <- function() {
+#Scrape the top 100 books from the past 30 days
+get_gutenberg_top100 <- function() {
   if (robotstxt::paths_allowed("https://www.gutenberg.org/browse/scores/top#books-last30") == "TRUE") {
+    gutenberg_page <- read_html("https://www.gutenberg.org/browse/scores/top#books-last30")
     books_last30 <- html_nodes(gutenberg_page, "#books-last30+ ol li")
     books_last30_text <- html_text(books_last30)
     books_last30_tbl <- tibble(
   title = gsub(" by.*", "", books_last30_text),
-  author = gsub(".* by ", "", books_last30_text)
+  author = gsub(".* by ", "", books_last30_text),
+  popularity = seq.int(1,100)
 )
-    print(books_last30_tbl)
+    
+  df_books30 <<- books_last30_tbl
   }
 }
 
-get_gutenberg()
-
+get_gutenberg_top100()
 ```
-
+```{r}
+top_100_books <- gutenberg_works() |>
+  filter(title %in% df_books30$title)
+top_100_text <- gutenberg_download(top_100_books$gutenberg_id, meta_fields = c("title", "author"))
+```
