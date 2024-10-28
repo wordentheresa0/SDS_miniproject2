@@ -1,6 +1,6 @@
 ---
 title: "MP2"
-format: html
+format: pdf
 editor: visual
 ---
 
@@ -36,19 +36,20 @@ get_gutenberg_top100()
 top_100_books <- gutenberg_works() |>
   filter(title %in% df_books30$title)
 
-top_100_text <- gutenberg_download(top_100_books$gutenberg_id, meta_fields = c("title", "author"))
+#top_100_text <- gutenberg_download(top_100_books$gutenberg_id, meta_fields = c("title", "author"))
 
-top_100_data <- top_100_text |>
-  mutate(text = na_if(text, "")) |>
-  na.omit() |>
-  group_by(title) |>
-  mutate(line_num = row_number()) |>
-  ungroup()
+#top_100_data <- top_100_text |>
+#  mutate(text = na_if(text, "")) |>
+#  na.omit() |>
+#  group_by(title) |>
+#  mutate(line_num = row_number()) |>
+#  ungroup()
 ```
 
 ```{r}
 book_ids <- top_100_books$gutenberg_id
 books_with_warnings <- list()
+books_with_warningsb <- list()
 top_100_data <- data.frame()
 
 download_book <- function(book_id, mirror = "http://aleph.gutenberg.org") {
@@ -65,26 +66,26 @@ download_book <- function(book_id, mirror = "http://aleph.gutenberg.org") {
   )
 }
 
-book_data <- lapply(book_ids, download_book, mirror = "http://aleph.gutenberg.org")
+book_data <- lapply(book_ids, download_book)
 
 print("Books with warnings:")
 print(books_with_warnings)
 
 top_100_data <- top_100_data |>
-  mutate(text = na_if(text, "")) |>
-  na.omit() |>
+  mutate(text = na_if(text, "")) |> #changing empty lines to NA
+  na.omit() |> #removing those empty (NA) lines
   group_by(title) |>
-  mutate(line_num = row_number()) |>
+  mutate(line_num = row_number()) |> #adding line number (starts at 1 for each book)
   ungroup()
 
-print("Combined data frame for all books:")
-print(top_100_data)
 
-book_data2 <- lapply(books_with_warnings, download_book, mirror = "http://mirrors.xmission.com/gutenberg/")
-# book_data2 is trying a different mirror, and the same exact books are unable to be downloaded...
+#print(top_100_data)
+#Note: this dataset is way to long to render to pdf. 
 
-
-
+#For viewing
+top_100_line_1 <- top_100_data |>
+  filter(line_num == 1)
+head(top_100_line_1)
 ```
 
 
