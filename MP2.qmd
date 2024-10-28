@@ -34,4 +34,14 @@ get_gutenberg_top100()
 top_100_books <- gutenberg_works() |>
   filter(title %in% df_books30$title)
 top_100_text <- gutenberg_download(top_100_books$gutenberg_id, meta_fields = c("title", "author"))
+
+
+data <- top_100_text |>
+  mutate(text = na_if(text, "")) |>
+  na.omit() |>
+  group_by(title) |>
+  mutate(line_num = row_number()) |>
+  ungroup()
 ```
+
+
