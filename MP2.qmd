@@ -12,7 +12,6 @@ library(htmltools)
 library(rvest)
 ```
 
-
 ```{r}
 #Scrape the top 100 books from the past 30 days
 get_gutenberg_top100 <- function() {
@@ -32,6 +31,7 @@ get_gutenberg_top100 <- function() {
 
 get_gutenberg_top100()
 ```
+
 ```{r}
 top_100_books <- gutenberg_works() |>
   filter(title %in% df_books30$title)
@@ -87,5 +87,3 @@ top_100_line_1 <- top_100_data |>
   filter(line_num == 1)
 head(top_100_line_1)
 ```
-
-

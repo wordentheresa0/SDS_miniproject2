@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.555">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>MP2</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="MP2_files/libs/clipboard/clipboard.min.js"></script>
+<script src="MP2_files/libs/quarto-html/quarto.js"></script>
+<script src="MP2_files/libs/quarto-html/popper.min.js"></script>
+<script src="MP2_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="MP2_files/libs/quarto-html/anchor.min.js"></script>
+<link href="MP2_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="MP2_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="MP2_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="MP2_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="MP2_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">MP2</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(polite)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gutenbergr)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(htmltools)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'rvest'
+
+The following object is masked from 'package:readr':
+
+    guess_encoding</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Scrape the top 100 books from the past 30 days</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>get_gutenberg_top100 <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (robotstxt<span class="sc">::</span><span class="fu">paths_allowed</span>(<span class="st">"https://www.gutenberg.org/browse/scores/top#books-last30"</span>) <span class="sc">==</span> <span class="st">"TRUE"</span>) {</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    gutenberg_page <span class="ot">&lt;-</span> <span class="fu">read_html</span>(<span class="st">"https://www.gutenberg.org/browse/scores/top#books-last30"</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    books_last30 <span class="ot">&lt;-</span> <span class="fu">html_nodes</span>(gutenberg_page, <span class="st">"#books-last30+ ol li"</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    books_last30_text <span class="ot">&lt;-</span> <span class="fu">html_text</span>(books_last30)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    books_last30_tbl <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">title =</span> <span class="fu">gsub</span>(<span class="st">" by.*"</span>, <span class="st">""</span>, books_last30_text),</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">author =</span> <span class="fu">gsub</span>(<span class="st">".* by "</span>, <span class="st">""</span>, books_last30_text),</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">popularity =</span> <span class="fu">seq.int</span>(<span class="dv">1</span>,<span class="dv">100</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  df_books30 <span class="ot">&lt;&lt;-</span> books_last30_tbl</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="fu">get_gutenberg_top100</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+ www.gutenberg.org                      </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>top_100_books <span class="ot">&lt;-</span> <span class="fu">gutenberg_works</span>() <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(title <span class="sc">%in%</span> df_books30<span class="sc">$</span>title)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>top_100_text <span class="ot">&lt;-</span> <span class="fu">gutenberg_download</span>(top_100_books<span class="sc">$</span>gutenberg_id, <span class="at">meta_fields =</span> <span class="fu">c</span>(<span class="st">"title"</span>, <span class="st">"author"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Determining mirror for Project Gutenberg from https://www.gutenberg.org/robot/harvest</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Using mirror http://aleph.gutenberg.org</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Could not download a book at http://aleph.gutenberg.org/1/11/11.zip.
+ℹ The book may have been archived.
+ℹ Alternatively, You may need to select a different mirror.
+→ See https://www.gutenberg.org/MIRRORS.ALL for options.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Could not download a book at http://aleph.gutenberg.org/4/46/46.zip.
+ℹ The book may have been archived.
+ℹ Alternatively, You may need to select a different mirror.
+→ See https://www.gutenberg.org/MIRRORS.ALL for options.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Could not download a book at http://aleph.gutenberg.org/1/0/100/100.zip.
+ℹ The book may have been archived.
+ℹ Alternatively, You may need to select a different mirror.
+→ See https://www.gutenberg.org/MIRRORS.ALL for options.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Could not download a book at http://aleph.gutenberg.org/1/2/120/120.zip.
+ℹ The book may have been archived.
+ℹ Alternatively, You may need to select a different mirror.
+→ See https://www.gutenberg.org/MIRRORS.ALL for options.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Could not download a book at http://aleph.gutenberg.org/1/4/145/145.zip.
+ℹ The book may have been archived.
+ℹ Alternatively, You may need to select a different mirror.
+→ See https://www.gutenberg.org/MIRRORS.ALL for options.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Could not download a book at http://aleph.gutenberg.org/1/7/174/174.zip.
+ℹ The book may have been archived.
+ℹ Alternatively, You may need to select a different mirror.
+→ See https://www.gutenberg.org/MIRRORS.ALL for options.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Could not download a book at http://aleph.gutenberg.org/3/4/345/345.zip.
+ℹ The book may have been archived.
+ℹ Alternatively, You may need to select a different mirror.
+→ See https://www.gutenberg.org/MIRRORS.ALL for options.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Could not download a book at http://aleph.gutenberg.org/7/3/730/730.zip.
+ℹ The book may have been archived.
+ℹ Alternatively, You may need to select a different mirror.
+→ See https://www.gutenberg.org/MIRRORS.ALL for options.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Could not download a book at http://aleph.gutenberg.org/1/3/4/1342/1342.zip.
+ℹ The book may have been archived.
+ℹ Alternatively, You may need to select a different mirror.
+→ See https://www.gutenberg.org/MIRRORS.ALL for options.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Could not download a book at http://aleph.gutenberg.org/1/5/1/1513/1513.zip.
+ℹ The book may have been archived.
+ℹ Alternatively, You may need to select a different mirror.
+→ See https://www.gutenberg.org/MIRRORS.ALL for options.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Could not download a book at http://aleph.gutenberg.org/2/1/4/2148/2148.zip.
+ℹ The book may have been archived.
+ℹ Alternatively, You may need to select a different mirror.
+→ See https://www.gutenberg.org/MIRRORS.ALL for options.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Could not download a book at http://aleph.gutenberg.org/2/1/9/2199/2199.zip.
+ℹ The book may have been archived.
+ℹ Alternatively, You may need to select a different mirror.
+→ See https://www.gutenberg.org/MIRRORS.ALL for options.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Could not download a book at http://aleph.gutenberg.org/2/4/8/2489/2489.zip.
+ℹ The book may have been archived.
+ℹ Alternatively, You may need to select a different mirror.
+→ See https://www.gutenberg.org/MIRRORS.ALL for options.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Could not download a book at http://aleph.gutenberg.org/2/6/4/2641/2641.zip.
+ℹ The book may have been archived.
+ℹ Alternatively, You may need to select a different mirror.
+→ See https://www.gutenberg.org/MIRRORS.ALL for options.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Could not download a book at
+  http://aleph.gutenberg.org/1/9/5/0/19508/19508.zip.
+ℹ The book may have been archived.
+ℹ Alternatively, You may need to select a different mirror.
+→ See https://www.gutenberg.org/MIRRORS.ALL for options.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Could not download a book at
+  http://aleph.gutenberg.org/1/9/6/4/19640/19640.zip.
+ℹ The book may have been archived.
+ℹ Alternatively, You may need to select a different mirror.
+→ See https://www.gutenberg.org/MIRRORS.ALL for options.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Could not download a book at
+  http://aleph.gutenberg.org/4/1/4/4/41445/41445.zip.
+ℹ The book may have been archived.
+ℹ Alternatively, You may need to select a different mirror.
+→ See https://www.gutenberg.org/MIRRORS.ALL for options.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Could not download a book at
+  http://aleph.gutenberg.org/4/3/9/3/43936/43936.zip.
+ℹ The book may have been archived.
+ℹ Alternatively, You may need to select a different mirror.
+→ See https://www.gutenberg.org/MIRRORS.ALL for options.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Could not download a book at
+  http://aleph.gutenberg.org/6/4/3/1/64317/64317.zip.
+ℹ The book may have been archived.
+ℹ Alternatively, You may need to select a different mirror.
+→ See https://www.gutenberg.org/MIRRORS.ALL for options.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Could not download a book at
+  http://aleph.gutenberg.org/6/7/0/9/67098/67098.zip.
+ℹ The book may have been archived.
+ℹ Alternatively, You may need to select a different mirror.
+→ See https://www.gutenberg.org/MIRRORS.ALL for options.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Could not download a book at
+  http://aleph.gutenberg.org/6/7/9/7/67979/67979.zip.
+ℹ The book may have been archived.
+ℹ Alternatively, You may need to select a different mirror.
+→ See https://www.gutenberg.org/MIRRORS.ALL for options.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>top_100_data <span class="ot">&lt;-</span> top_100_text <span class="sc">|&gt;</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">text =</span> <span class="fu">na_if</span>(text, <span class="st">""</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>() <span class="sc">|&gt;</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(title) <span class="sc">|&gt;</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">line_num =</span> <span class="fu">row_number</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>book_ids <span class="ot">&lt;-</span> top_100_books<span class="sc">$</span>gutenberg_id</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>books_with_warnings <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>top_100_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>download_book <span class="ot">&lt;-</span> <span class="cf">function</span>(book_id, <span class="at">mirror =</span> <span class="st">"http://aleph.gutenberg.org"</span>) {</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tryCatch</span>(</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>      data <span class="ot">&lt;-</span> <span class="fu">gutenberg_download</span>(book_id, <span class="at">meta_fields =</span> <span class="fu">c</span>(<span class="st">"title"</span>, <span class="st">"author"</span>), <span class="at">mirror =</span> mirror)</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>      top_100_data <span class="ot">&lt;&lt;-</span> <span class="fu">bind_rows</span>(top_100_data, data)</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">warning =</span> <span class="cf">function</span>(w) {</span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>      books_with_warnings <span class="ot">&lt;&lt;-</span> <span class="fu">c</span>(books_with_warnings, book_id)</span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">message</span>(<span class="st">"Warning for book ID: "</span>, book_id) </span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">return</span>(<span class="cn">NULL</span>)</span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>book_data <span class="ot">&lt;-</span> <span class="fu">lapply</span>(book_ids, download_book, <span class="at">mirror =</span> <span class="st">"http://aleph.gutenberg.org"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning for book ID: 11</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning for book ID: 46</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning for book ID: 100</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning for book ID: 120</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning for book ID: 145</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning for book ID: 174</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning for book ID: 345</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning for book ID: 730</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning for book ID: 1342</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning for book ID: 1513</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning for book ID: 2148</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning for book ID: 2199</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning for book ID: 2489</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning for book ID: 2641</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning for book ID: 19508</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning for book ID: 19640</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning for book ID: 41445</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning for book ID: 43936</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning for book ID: 64317</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning for book ID: 67098</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning for book ID: 67979</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"Books with warnings:"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Books with warnings:"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(books_with_warnings)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] 11
+
+[[2]]
+[1] 46
+
+[[3]]
+[1] 100
+
+[[4]]
+[1] 120
+
+[[5]]
+[1] 145
+
+[[6]]
+[1] 174
+
+[[7]]
+[1] 345
+
+[[8]]
+[1] 730
+
+[[9]]
+[1] 1342
+
+[[10]]
+[1] 1513
+
+[[11]]
+[1] 2148
+
+[[12]]
+[1] 2199
+
+[[13]]
+[1] 2489
+
+[[14]]
+[1] 2641
+
+[[15]]
+[1] 19508
+
+[[16]]
+[1] 19640
+
+[[17]]
+[1] 41445
+
+[[18]]
+[1] 43936
+
+[[19]]
+[1] 64317
+
+[[20]]
+[1] 67098
+
+[[21]]
+[1] 67979</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>top_100_data <span class="ot">&lt;-</span> top_100_data <span class="sc">|&gt;</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">text =</span> <span class="fu">na_if</span>(text, <span class="st">""</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>() <span class="sc">|&gt;</span></span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(title) <span class="sc">|&gt;</span></span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">line_num =</span> <span class="fu">row_number</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"Combined data frame for all books:"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Combined data frame for all books:"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(top_100_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 340,792 × 5
+   gutenberg_id text                       title              author    line_num
+          &lt;int&gt; &lt;chr&gt;                      &lt;chr&gt;              &lt;chr&gt;        &lt;int&gt;
+ 1           33 "The Scarlet Letter"       The Scarlet Letter Hawthorn…        1
+ 2           33 "by Nathaniel Hawthorne"   The Scarlet Letter Hawthorn…        2
+ 3           33 "Contents"                 The Scarlet Letter Hawthorn…        3
+ 4           33 " THE CUSTOM-HOUSE"        The Scarlet Letter Hawthorn…        4
+ 5           33 " THE SCARLET LETTER"      The Scarlet Letter Hawthorn…        5
+ 6           33 " I. THE PRISON DOOR"      The Scarlet Letter Hawthorn…        6
+ 7           33 " II. THE MARKET-PLACE"    The Scarlet Letter Hawthorn…        7
+ 8           33 " III. THE RECOGNITION"    The Scarlet Letter Hawthorn…        8
+ 9           33 " IV. THE INTERVIEW"       The Scarlet Letter Hawthorn…        9
+10           33 " V. HESTER AT HER NEEDLE" The Scarlet Letter Hawthorn…       10
+# ℹ 340,782 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>book_data2 <span class="ot">&lt;-</span> <span class="fu">lapply</span>(books_with_warnings, download_book, <span class="at">mirror =</span> <span class="st">"http://mirrors.xmission.com/gutenberg/"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning for book ID: 11</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning for book ID: 46</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning for book ID: 100</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning for book ID: 120</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning for book ID: 145</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning for book ID: 174</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning for book ID: 345</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning for book ID: 730</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning for book ID: 1342</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning for book ID: 1513</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning for book ID: 2148</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning for book ID: 2199</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning for book ID: 2489</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning for book ID: 2641</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning for book ID: 19508</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning for book ID: 19640</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning for book ID: 41445</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning for book ID: 43936</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning for book ID: 64317</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning for book ID: 67098</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning for book ID: 67979</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="co"># book_data2 is trying a different mirror, and the same exact books are unable to be downloaded...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

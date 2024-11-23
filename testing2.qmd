@@ -1,0 +1,92 @@
+---
+title: "MP2"
+format: html
+editor: visual
+---
+
+```{r}
+# to install gutenbergr package
+install.packages("gutenbergr")
+```
+
+```{r}
+#| include: FALSE
+
+library(tidyverse)
+library(stringr)
+library(rvest)
+library(polite)
+library(sf)
+library(maps)
+library(viridis)
+library(leaflet)
+library(htmltools)
+library(gutenbergr)
+```
+
+
+```{r}
+# check that scraping is allowed (Step 0)
+robotstxt::paths_allowed("https://www.gutenberg.org/browse/scores/top#books-last30")
+
+# Step 1: Download the HTML and turn it into an XML file with read_html()
+gutenberg_page <- read_html("https://www.gutenberg.org/browse/scores/top#books-last30")
+```
+
+```{r}
+# Step 2: Extract specific nodes with html_nodes()
+books_last30 <- html_nodes(gutenberg_page, "#books-last30+ ol li")
+books_last30
+```
+```{r}
+books_last30_text <- html_text(books_last30)
+books_last30_text
+```
+
+```{r}
+books_last30_tbl <- tibble(
+  title = gsub(" by.*", "", books_last30_text),
+  author = gsub(".* by ", "", books_last30_text)
+)
+```
+
+```{r}
+books_last30_tbl
+```
+
+
+Example: One method to get id and text for Frankenstein
+
+```{r}
+frankenstein <- gutenberg_works(title == "Frankenstein; Or, The Modern Prometheus")
+```
+
+```{r}
+frankenstein_id <- frankenstein |>
+  pull(gutenberg_id)
+frankenstein_id
+```
+
+```{r}
+frankenstein_text_tbl <- gutenberg_download(frankenstein_id)
+```
+
+```{r}
+frankenstein_text_tbl
+```
+
+
+Function for getting text from title:
+```{r}
+get_text <- function(t) {
+  initial_tbl <- gutenberg_works(title == t)
+  id <- initial_tbl |>
+    pull(gutenberg_id)
+  text_tbl <- gutenberg_download(id)
+}
+```
+
+```{r}
+get_text("Frankenstein; Or, The Modern Prometheus")
+```
+
